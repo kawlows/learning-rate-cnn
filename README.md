@@ -16,3 +16,17 @@ python lr_experiment.py
 
 Runs on a laptop CPU in a few minutes. Writes `results.json` and `figures/*.png`.
 Fashion-MNIST downloads to `data/` on first run.
+
+## Why lr = 1.0 gets stuck at chance
+
+```bash
+python dead_relu_check.py
+```
+
+Trains 1 epoch at lr = 0.1 and lr = 1.0 and counts ReLU units that output 0 for every
+validation image (dead units get no gradient and cannot recover). Expected output:
+
+```
+lr=0.1: dead conv1 0/16 (0%), conv2 0/32 (0%), fc1 0/64 (0%) | logit spread across images 2.6069
+lr=1.0: dead conv1 0/16 (0%), conv2 27/32 (84%), fc1 62/64 (97%) | logit spread across images 0.0000
+```
